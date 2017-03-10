@@ -17,7 +17,7 @@ _.range(rows).map(function (elem, index) {
 
 // create grid cells in rows (columns)
 function createCellsInRow(rowId) {
-  _.range(columns).map(function(elem, index) {
+  _.range(columns).map(function (elem, index) {
     var cellId = 'cell' + ((rowId * columns) + index); //create id for the div
     var $newDiv = $("<div>").attr('id', cellId).addClass("cell"); //create and empty div with iD
     var $divLoc = $("#row" + rowId); //locate div container;
@@ -39,11 +39,11 @@ function initCell() {
   return cellState = Math.random() < genWeighting ? 1 : 0;
 }
 
+// display board post init and on new generation
 function printBoard() {
   board.forEach(function (elem, index) {
     var cellClass;
     var cellId = "cell" + index;
-    var bground = "green";
     elem > 0 ? cellClass = "cell-live" : cellClass = "cell-dead";
     $("#" + cellId).attr("class", cellClass);
   });
@@ -51,7 +51,9 @@ function printBoard() {
 
 initBoard(columns, rows);
 
-// generate new tick of baord
+// generate new tick of board.
+// get cell score based on neighbour statuses (checkNeighbours)
+// Get new cell state based on score (newCellState)
 function newGeneration() {
   var cellScore, cellState;
   var newBoard = [];
@@ -71,7 +73,7 @@ function checkNeighbours(cellIndex) {
   neighbours.forEach(function (element) {
     // Account for neighbours outside the array range
     isNaN(board[cellIndex + element]) ? cellScore = 0 : cellScore = board[cellIndex + element];
-    cellTotal += cellScore
+    cellTotal += cellScore;
   });
   return cellTotal;
 }
@@ -86,7 +88,7 @@ function newCellState(cellIndex, cellScore) {
 
 // game controls
 $("#start-gen").on("click", function () {
-  regen = setInterval(function () {newGeneration ()}, 500);
+  regen = setInterval(function () {newGeneration()}, 500);
 });
 
 $("#stop-gen").on("click", function () {
