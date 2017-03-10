@@ -39,7 +39,7 @@ function initCell() {
   return cellState = Math.random() < genWeighting ? 1 : 0;
 }
 
-// display board post init and on new generation
+// display board post init and on new generation. Class determines cell colour.
 function printBoard() {
   board.forEach(function (elem, index) {
     var cellClass;
