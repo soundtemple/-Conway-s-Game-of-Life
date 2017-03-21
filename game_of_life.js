@@ -36,7 +36,7 @@ function initBoard(columns, rows) {
 
 // set init cell to On or Off. Weighted to Off for better genreation results
 function initCell() {
-  return cellState = Math.random() < genWeighting ? 1 : 0;
+  return Math.random() < genWeighting ? 1 : 0;
 }
 
 // display board post init and on new generation. Class determines cell colour.
@@ -81,8 +81,8 @@ function checkNeighbours(currentCell) {
 // Cell dies unless neighbour score is 2-3 OR dead cell has neighbour score ==3
 function newCellState(currentCell, cellScore) {
   var newCellState = 0;
-  cellScore == 2 || cellScore == 3 && board[currentCell] ? newCellState = 1 : newCellState = 0;
-  if (cellScore == 3 && board[currentCell] == 0) newCellState = 1;
+  cellScore === 2 || cellScore === 3 && board[currentCell] ? newCellState = 1 : newCellState = 0;
+  if (cellScore === 3 && board[currentCell] === 0) newCellState = 1;
   return newCellState;
 }
 
