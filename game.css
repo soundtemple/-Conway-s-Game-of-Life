@@ -35,8 +35,7 @@ body {
 .cell-dead {
   display: flex;
   flex-flow: wrap;
-  width: 1.25%;
-  max-width: 1.25%;
+  width: 10px;
   height:10px;
   max-height: 10px;
   color: black;
@@ -51,12 +50,14 @@ body {
 }
 
 .logo,
-.game-controls {
+.game-controls,
+.game-options {
   margin: auto;
   padding: 2%;
 }
 
-button {
+button,
+select {
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;
