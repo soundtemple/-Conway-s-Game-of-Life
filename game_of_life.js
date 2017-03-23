@@ -1,19 +1,33 @@
 var board = [];
 var columns = 80;
 var rows = 20;
-var neighbours = [-1, 1, columns, -columns, columns - 1, columns + 1, -columns + 1, -columns - 1];
+var neighbours = [];
 var regen;
 var genWeighting = 0.05; //sets start weighting for generation 0=Off 1=On
 
+// init on open
+function initGame() {
+  neighbours = neighbours = [-1, 1, columns, -columns, columns - 1, columns + 1, -columns + 1, -columns - 1];
+  board = [];
+  $(".board").empty();
+  initBoard(columns, rows);
+  createRows();
+  var cellWidth = 800 / columns;
+  $(".cell").css("width", cellWidth)
+}
+
+initGame();
 
 // create grid rows
-_.range(rows).map(function (rowNum) {
-  var rowId = 'row' + rowNum; //create id for the div
-  var $newDiv = $("<div>").attr('id', rowId).addClass("row"); //create and empty div with iD
-  var $divLoc = $('.board'); //locate div container;
-  $divLoc.append($newDiv);
-  createCellsInRow(rowNum);
-});
+function createRows() {
+  _.range(rows).map(function (rowNum) {
+    var rowId = 'row' + rowNum; //create id for the div
+    var $newDiv = $("<div>").attr('id', rowId).addClass("row"); //create and empty div with iD
+    var $divLoc = $('.board'); //locate div container;
+    $divLoc.append($newDiv);
+    createCellsInRow(rowNum);
+  });
+};
 
 // create grid cells in rows (columns)
 function createCellsInRow(rowNum) {
@@ -27,6 +41,7 @@ function createCellsInRow(rowNum) {
 
 // initialise board. create array and with values 0 or 1 for on/off
 function initBoard(columns, rows) {
+  console.log('board init ' + columns + " by " + rows);
   var cellNum = 0;
   while (cellNum < (columns * rows)) {
     board.push(initCell());
@@ -44,12 +59,12 @@ function printBoard() {
   board.forEach(function (elem, index) {
     var cellClass;
     var cellId = "cell" + index;
-    elem > 0 ? cellClass = "cell-live" : cellClass = "cell-dead";
+    elem > 0 ? cellClass = "cell cell-live" : cellClass = "cell cell-dead";
     $("#" + cellId).attr("class", cellClass);
   });
 }
 
-initBoard(columns, rows);
+
 
 // generate new tick of board.
 // get cell score based on neighbour statuses (checkNeighbours)
@@ -89,8 +104,21 @@ function newCellState(currentCell, cellScore) {
 // game controls
 $("#start-gen").on("click", function () {
   regen = setInterval(function () {newGeneration()}, 500);
+  $(".game-options").hide();
 });
 
 $("#stop-gen").on("click", function () {
   clearInterval(regen);
+  $(".game-options").show();
+});
+
+// game options
+$("#grid-rows").on("change", function () {
+  rows = (this.value);
+  initGame();
+});
+
+$("#grid-columns").on("change", function () {
+  columns = (this.value);
+  initGame();
 });
