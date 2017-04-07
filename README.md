@@ -1,5 +1,5 @@
-#Marketplacer Coding Challenge
-This is a solution to the Marketplacer Coding Challenge.  It implements a a version of Conway’s game of Life, using Javascript.
+# Coding Challenge
+This is a solution to the Coding Challenge.  It implements a a version of Conway’s game of Life, using Javascript.
 
 ## Methodology
 1. Understand the rules of the game.
